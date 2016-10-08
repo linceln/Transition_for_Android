@@ -42,6 +42,8 @@ public class SecondActivity extends AppCompatActivity {
         Slide slide = new Slide();
         slide.setDuration(200);
         slide.setSlideEdge(Gravity.END);
+        slide.excludeTarget(android.R.id.statusBarBackground, true);
+        slide.excludeTarget(android.R.id.navigationBarBackground, true);
         getWindow().setReturnTransition(slide);
     }
 

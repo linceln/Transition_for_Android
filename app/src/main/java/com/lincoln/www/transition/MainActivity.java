@@ -14,6 +14,9 @@ import android.transition.Fade;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -44,8 +47,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(MainActivity.this, true);
-                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, pairs);
+//                Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(MainActivity.this, true);
+
+                View decorView = getWindow().getDecorView();
+                View statusBar = decorView.findViewById(android.R.id.statusBarBackground);
+                View navigationBar = decorView.findViewById(android.R.id.navigationBarBackground);
+
+                List<Pair<View, String>> pairs = new ArrayList<>(3);
+                pairs.add(new Pair(statusBar, statusBar.getTransitionName()));
+                pairs.add(new Pair(navigationBar, navigationBar.getTransitionName()));
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, pairs.toArray(new Pair[pairs.size()]));
                 Intent intent = new Intent(MainActivity.this, SecondActivity.class);
                 startActivity(intent, optionsCompat.toBundle());
             }
