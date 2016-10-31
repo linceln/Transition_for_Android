@@ -3,8 +3,6 @@ package com.lincoln.www.transition;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.Toolbar;
 import android.transition.Explode;
@@ -13,7 +11,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -67,17 +64,11 @@ public class SecondActivity extends BaseActivity {
 
             @Override
             public void onClick(View v) {
-//                Intent i = new Intent(SecondActivity.this, ThirdActivity.class);
-//                ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(SecondActivity.this, v, "transition");
-//                startActivity(i, transitionActivityOptions.toBundle());
 
                 Intent intent = new Intent(SecondActivity.this, ThirdActivity.class);
                 List<Pair<View, String>> pairs = new ArrayList<>();
-                pairs.add(Pair.create(findViewById(android.R.id.statusBarBackground), Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME));
-                pairs.add(Pair.create(findViewById(android.R.id.navigationBarBackground), Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME));
-                pairs.add(Pair.create(v, "transition"));
-                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(SecondActivity.this, pairs.toArray(new Pair[pairs.size()]));
-                ActivityCompat.startActivity(SecondActivity.this, intent, options.toBundle());
+                pairs.add(Pair.create(v, "transition"));// Shared Elements
+                startActivityAnimated(SecondActivity.this, intent, pairs);
             }
         });
 
