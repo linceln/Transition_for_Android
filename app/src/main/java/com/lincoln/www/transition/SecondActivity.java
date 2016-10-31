@@ -1,9 +1,11 @@
 package com.lincoln.www.transition;
 
+import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.Toolbar;
 import android.transition.Explode;
 import android.transition.Slide;
@@ -11,27 +13,28 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class SecondActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class SecondActivity extends BaseActivity {
 
     private BaseAdapter mAdapter;
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected int getLayout() {
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_second);
-        setupWindowAnimations();
-        initUI();
-        initData();
+        return R.layout.activity_second;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void setupWindowAnimations() {
+    @Override
+    protected void setupWindowAnimations() {
 
         Explode explode = new Explode();
         explode.setDuration(500);
@@ -47,15 +50,36 @@ public class SecondActivity extends AppCompatActivity {
         getWindow().setReturnTransition(slide);
     }
 
-    private void initData() {
+    @Override
+    protected void initData() {
 
     }
 
-    private void initUI() {
+    @Override
+    protected void initUI() {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("SecondActivity");
         setSupportActionBar(toolbar);
+
+        ImageView iv = (ImageView) findViewById(R.id.iv);
+        iv.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+//                Intent i = new Intent(SecondActivity.this, ThirdActivity.class);
+//                ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(SecondActivity.this, v, "transition");
+//                startActivity(i, transitionActivityOptions.toBundle());
+
+                Intent intent = new Intent(SecondActivity.this, ThirdActivity.class);
+                List<Pair<View, String>> pairs = new ArrayList<>();
+                pairs.add(Pair.create(findViewById(android.R.id.statusBarBackground), Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME));
+                pairs.add(Pair.create(findViewById(android.R.id.navigationBarBackground), Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME));
+                pairs.add(Pair.create(v, "transition"));
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(SecondActivity.this, pairs.toArray(new Pair[pairs.size()]));
+                ActivityCompat.startActivity(SecondActivity.this, intent, options.toBundle());
+            }
+        });
 
         ListView listView = (ListView) findViewById(R.id.listView);
         mAdapter = new BaseAdapter() {

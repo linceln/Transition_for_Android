@@ -72,5 +72,4 @@ class TransitionHelper {
         }
         participants.add(new Pair<>(view, view.getTransitionName()));
     }
-
 }
