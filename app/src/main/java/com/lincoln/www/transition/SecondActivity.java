@@ -98,6 +98,7 @@ public class SecondActivity extends BaseActivity {
                 View view = LayoutInflater.from(SecondActivity.this).inflate(R.layout.listview_item, parent, false);
                 final View imageView = view.findViewById(R.id.iv);
                 View linear = view.findViewById(R.id.linear);
+                // 对整个item进行点击监听
                 linear.setOnClickListener(new View.OnClickListener() {
 
                     @Override
@@ -105,34 +106,14 @@ public class SecondActivity extends BaseActivity {
 
                         Intent intent = new Intent(SecondActivity.this, ThirdActivity.class);
                         List<Pair<View, String>> pairs = new ArrayList<>();
+                        // 需要动画过渡的是ImageView
                         pairs.add(Pair.create(imageView, getString(R.string.transition)));// Shared Elements
                         startActivityAnimated(SecondActivity.this, intent, pairs);
                     }
                 });
-//                imageView.setOnClickListener(new View.OnClickListener() {
-//
-//                    @Override
-//                    public void onClick(View v) {
-//                        Intent intent = new Intent(SecondActivity.this, ThirdActivity.class);
-//                        List<Pair<View, String>> pairs = new ArrayList<>();
-//                        pairs.add(Pair.create(v, getString(R.string.transition)));// Shared Elements
-//                        startActivityAnimated(SecondActivity.this, intent, pairs);
-//                    }
-//                });
                 return view;
             }
         };
         listView.setAdapter(mAdapter);
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                Intent intent = new Intent(SecondActivity.this, ThirdActivity.class);
-//                List<Pair<View, String>> pairs = new ArrayList<>();
-//                pairs.add(Pair.create(view, getString(R.string.transition)));// Shared Elements
-//                startActivityAnimated(SecondActivity.this, intent, pairs);
-//            }
-//        });
     }
 }
