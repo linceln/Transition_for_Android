@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
         android:src="@mipmap/ic_launcher"
-        android:transitionName="transition"
+        android:transitionName="@string/transition"
         />
 
     <ListView

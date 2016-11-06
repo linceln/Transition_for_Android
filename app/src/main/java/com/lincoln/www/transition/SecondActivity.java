@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +66,7 @@ public class SecondActivity extends BaseActivity {
 
                 Intent intent = new Intent(SecondActivity.this, ThirdActivity.class);
                 List<Pair<View, String>> pairs = new ArrayList<>();
-                pairs.add(Pair.create(v, "transition"));// Shared Elements
+                pairs.add(Pair.create(v, getString(R.string.transition)));// Shared Elements
                 startActivityAnimated(SecondActivity.this, intent, pairs);
             }
         });
@@ -96,12 +95,44 @@ public class SecondActivity extends BaseActivity {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
 
-                View view = LayoutInflater.from(SecondActivity.this).inflate(android.R.layout.simple_list_item_1, parent, false);
-                TextView text = (TextView) view.findViewById(android.R.id.text1);
-                text.setText("position: " + position);
+                View view = LayoutInflater.from(SecondActivity.this).inflate(R.layout.listview_item, parent, false);
+                final View imageView = view.findViewById(R.id.iv);
+                View linear = view.findViewById(R.id.linear);
+                linear.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent intent = new Intent(SecondActivity.this, ThirdActivity.class);
+                        List<Pair<View, String>> pairs = new ArrayList<>();
+                        pairs.add(Pair.create(imageView, getString(R.string.transition)));// Shared Elements
+                        startActivityAnimated(SecondActivity.this, intent, pairs);
+                    }
+                });
+//                imageView.setOnClickListener(new View.OnClickListener() {
+//
+//                    @Override
+//                    public void onClick(View v) {
+//                        Intent intent = new Intent(SecondActivity.this, ThirdActivity.class);
+//                        List<Pair<View, String>> pairs = new ArrayList<>();
+//                        pairs.add(Pair.create(v, getString(R.string.transition)));// Shared Elements
+//                        startActivityAnimated(SecondActivity.this, intent, pairs);
+//                    }
+//                });
                 return view;
             }
         };
         listView.setAdapter(mAdapter);
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                Intent intent = new Intent(SecondActivity.this, ThirdActivity.class);
+//                List<Pair<View, String>> pairs = new ArrayList<>();
+//                pairs.add(Pair.create(view, getString(R.string.transition)));// Shared Elements
+//                startActivityAnimated(SecondActivity.this, intent, pairs);
+//            }
+//        });
     }
 }
